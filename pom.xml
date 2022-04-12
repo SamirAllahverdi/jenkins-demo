@@ -62,7 +62,72 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <!-- Maven Plugin 1 io.fabric8-->
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.37.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <verbose>true</verbose>
+                    <!--    <dockerHost>unix:///var/run/docker.sock</dockerHost>
+                        <registry>http://index.docker.io/v1</registry>
+
+                        <authConfig>
+                            <username>user</username>
+                            <password>pass</password>
+                        </authConfig>
+                    -->
+                    <images>
+                        <image>
+                            <name>denizturkmen/${project.artifactId}</name>
+                            <build>
+                                <shell>
+                                    <exec>
+                                        <arg>/bin/sh</arg>
+                                        <arg>-c</arg>
+                                        <arg>mkdir -p /mnt/jenkins</arg>
+                                    </exec>
+                                </shell>
+                                <from>openjdk:11</from>
+                                <!--
+                                    <tags>
+                                        <tag>latest</tag>
+                                        <tag>${project.version}</tag>
+                                    </tags>
+                                -->
+                                <ports>
+                                    <port>8080</port>
+                                </ports>
+                                <volumes>
+                                    <volume>/mnt/jenkins</volume>
+                                </volumes>
+                                <entryPoint>
+                                    <exec>
+                                        <args>java</args>
+                                        <args>-jar</args>
+                                        <args>/maven/${project.artifactId}-${project.version}.jar</args>
+                                    </exec>
+                                </entryPoint>
+                                <assembly>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>build</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
 
 </project>
