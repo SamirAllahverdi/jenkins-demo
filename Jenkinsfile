@@ -1,11 +1,16 @@
 pipeline {
-    agent any
-    tools {
-                  docker {
-                      image "mvn:3.8.3-openjdk-11"
-                      label "master"
-                  }
-              }
+    agent {
+        docker {
+            image "mvn:3.8.3-openjdk-11"
+            label "master"
+        }
+    }
+    //     tools {
+//                   docker {
+//                       image "mvn:3.8.3-openjdk-11"
+//                       label "master"
+//                   }
+//               }
     stages {
         stage("build project") {
             steps {
