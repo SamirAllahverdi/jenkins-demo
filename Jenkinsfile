@@ -1,9 +1,11 @@
 pipeline {
     agent any
     tools {
-        jdk 'jdk'
-        maven '3.8.3'
-    }
+                  docker {
+                      image "mvn:3.8.3-openjdk-11"
+                      label "master"
+                  }
+              }
     stages {
         stage("build project") {
             steps {
