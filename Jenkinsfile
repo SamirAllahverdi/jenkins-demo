@@ -1,14 +1,23 @@
 pipeline {
     agent {
-        docker {
-            image "mvn:3.8.3-openjdk-11"
-        }
+        jdk 'MyJdk'
+        maven "MyMaven"
     }
+
     stages {
-        stage('Build') {
+        stage("build project") {
             steps {
-               echo 'This is a minimal pipeline.'
+                echo "Java VERSION"
+                sh 'java -version'
+                echo "Maven VERSION"
+                sh 'mvn -version'
+                echo 'building project...'
+                sh "mvn compile"
+                sh "mvn package"
+                //sh "mvn test"
+                sh "mvn clean install"
             }
         }
     }
+
 }
