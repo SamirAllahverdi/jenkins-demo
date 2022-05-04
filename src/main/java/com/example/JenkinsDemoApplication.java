@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class JenkinsDemoApplication {
+
+
+
     //TODO: application.yaml
     //TODO: liquibase
     public static void main(String[] args) {
