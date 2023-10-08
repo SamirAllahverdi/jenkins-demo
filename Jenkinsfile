@@ -11,10 +11,8 @@ pipeline {
         }
         stage("push image"){
           steps{
-                withCredentials([usernamePassword(passwordVariable: 'dockerPassword', usernameVariable: 'dockerUser')]) {
                 	bat "docker login -u %dockerUser% -p %dockerPassword%"
                     bat 'docker push cerment/jenkins-demo:%BUILD_NUMBER%'
-                }
           }
         }
     }
