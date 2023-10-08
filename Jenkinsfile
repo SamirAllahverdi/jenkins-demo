@@ -1,10 +1,10 @@
 pipeline {
     agent any
-    def dockerImageTag = "jenkins-demo:${env.BUILD_ID}"
     tools {
         maven "Maven-3.8.3"
     }
     stages {
+        def dockerImageTag = "jenkins-demo:${env.BUILD_ID}"
         stage("build image") {
         agent any
             steps {
