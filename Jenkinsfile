@@ -11,7 +11,7 @@ pipeline {
     }}
         stage("build image") {
           steps {
-             bat 'docker build -t cerment/jenkins-demo:${env.BUILD_ID} .'
+             bat 'docker build -t cerment/jenkins-demo:%BUILD_NUMBER% .'
           }
         }
     }
