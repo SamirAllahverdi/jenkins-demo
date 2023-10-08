@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    def dockerImageTag = "jenkins-demo:${env.BUILD_ID}"
     tools {
         maven "Maven-3.8.3"
     }
@@ -7,14 +8,15 @@ pipeline {
         stage("build image") {
         agent any
             steps {
-                sh 'mvn springboot:build-image'
+             dockerImage = docker.build(${dockerImageTag})
             }
         }
         stage("push image"){
             steps{
-              withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+              echo "Docker Image Tag Name: ${dockerImageTag}"
+              withCredentials([usernamePassword(credentialsId: 'f3ef67b7-5707-4f44-9565-6e3eb3e11df1', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
               	sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                sh 'docker push cerment/jenkins-demo:0.0.1-SNAPSHOT'
+                sh 'docker push cerment/${dockerImageTag}'
               }
             }
         }
