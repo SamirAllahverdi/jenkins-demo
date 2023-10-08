@@ -4,9 +4,13 @@ pipeline {
         maven "Maven-3.8.3"
     }
     stages {
+    stage("env BUILD_ID"){
+    steps{
+                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+
+    }}
         stage("build image") {
           steps {
-             echo %env.BUILD_ID%
              bat 'docker build -t cerment/jenkins-demo:${env.BUILD_ID} .'
           }
         }
