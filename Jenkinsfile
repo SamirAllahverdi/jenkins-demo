@@ -4,14 +4,17 @@ pipeline {
         maven "Maven-3.8.3"
     }
     stages {
-    stage("env BUILD_ID"){
-    steps{
-                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-
-    }}
         stage("build image") {
           steps {
              bat 'docker build -t cerment/jenkins-demo:%BUILD_NUMBER% .'
+          }
+        }
+        stage("push image"){
+          steps{
+                withCredentials([usernamePassword(credentialsId: 'UsernamePassword', passwordVariable: 'dockerPassword', usernameVariable: 'dockerUser')]) {
+                	bat "docker login -u %dockerUser% -p %dockerPassword%"
+                    bat 'docker push cerment/jenkins-demo:%BUILD_NUMBER%'
+                }
           }
         }
     }
