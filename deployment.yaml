@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hello-minikube
+  name: hello-minikube
+spec:
+  selector:
+    matchLabels:
+      app: hello-minikube
+  template:
+    metadata:
+      labels:
+        app: hello-minikube
+    spec:
+      containers:
+        - image: cerment/jenkins-demo:3000
+          imagePullPolicy: IfNotPresent
+          name: jenkins-demo
+---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: hello-minikube
+    name: hello-minikube
+  spec:
+    type: NodePort
+    ports:
+      - port: 8081
+        protocol: TCP
+        targetPort: 8081
+    selector:
+      app: hello-minikube
